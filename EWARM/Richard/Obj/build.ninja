@@ -20,6 +20,8 @@ rule browsedata
 
 
 #Build steps
+build file_handling.pbi : index file_handling.xcl
+build UartRingbuffer.pbi : index UartRingbuffer.xcl
 build gpio.pbi : index gpio.xcl
 build main.pbi : index main.xcl
 build sdmmc.pbi : index sdmmc.xcl
@@ -57,13 +59,13 @@ build diskio.pbi : index diskio.xcl
 build ff.pbi : index ff.xcl
 build ff_gen_drv.pbi : index ff_gen_drv.xcl
 build syscall.pbi : index syscall.xcl
-build Richard_part0.pbi : link gpio.pbi main.pbi sdmmc.pbi stm32l4xx_hal_msp.pbi stm32l4xx_it.pbi usart.pbi
-build Richard_part1.pbi : link fatfs.pbi bsp_driver_sd.pbi fatfs_platform.pbi sd_diskio.pbi system_stm32l4xx.pbi stm32l4xx_hal.pbi
-build Richard_part2.pbi : link stm32l4xx_hal_cortex.pbi stm32l4xx_hal_dma.pbi stm32l4xx_hal_dma_ex.pbi stm32l4xx_hal_exti.pbi stm32l4xx_hal_flash.pbi stm32l4xx_hal_flash_ex.pbi
-build Richard_part3.pbi : link stm32l4xx_hal_flash_ramfunc.pbi stm32l4xx_hal_gpio.pbi stm32l4xx_hal_i2c.pbi stm32l4xx_hal_i2c_ex.pbi stm32l4xx_hal_pwr.pbi stm32l4xx_hal_pwr_ex.pbi
-build Richard_part4.pbi : link stm32l4xx_hal_rcc.pbi stm32l4xx_hal_rcc_ex.pbi stm32l4xx_hal_sd.pbi stm32l4xx_hal_sd_ex.pbi stm32l4xx_hal_tim.pbi stm32l4xx_hal_tim_ex.pbi
-build Richard_part5.pbi : link stm32l4xx_hal_uart.pbi stm32l4xx_hal_uart_ex.pbi stm32l4xx_ll_sdmmc.pbi diskio.pbi ff.pbi ff_gen_drv.pbi
-build Richard_part6.pbi : link syscall.pbi
+build Richard_part0.pbi : link file_handling.pbi UartRingbuffer.pbi gpio.pbi main.pbi sdmmc.pbi stm32l4xx_hal_msp.pbi
+build Richard_part1.pbi : link stm32l4xx_it.pbi usart.pbi fatfs.pbi bsp_driver_sd.pbi fatfs_platform.pbi sd_diskio.pbi
+build Richard_part2.pbi : link system_stm32l4xx.pbi stm32l4xx_hal.pbi stm32l4xx_hal_cortex.pbi stm32l4xx_hal_dma.pbi stm32l4xx_hal_dma_ex.pbi stm32l4xx_hal_exti.pbi
+build Richard_part3.pbi : link stm32l4xx_hal_flash.pbi stm32l4xx_hal_flash_ex.pbi stm32l4xx_hal_flash_ramfunc.pbi stm32l4xx_hal_gpio.pbi stm32l4xx_hal_i2c.pbi stm32l4xx_hal_i2c_ex.pbi
+build Richard_part4.pbi : link stm32l4xx_hal_pwr.pbi stm32l4xx_hal_pwr_ex.pbi stm32l4xx_hal_rcc.pbi stm32l4xx_hal_rcc_ex.pbi stm32l4xx_hal_sd.pbi stm32l4xx_hal_sd_ex.pbi
+build Richard_part5.pbi : link stm32l4xx_hal_tim.pbi stm32l4xx_hal_tim_ex.pbi stm32l4xx_hal_uart.pbi stm32l4xx_hal_uart_ex.pbi stm32l4xx_ll_sdmmc.pbi diskio.pbi
+build Richard_part6.pbi : link ff.pbi ff_gen_drv.pbi syscall.pbi
 build Richard.pbd : link Richard_part0.pbi Richard_part1.pbi Richard_part2.pbi Richard_part3.pbi Richard_part4.pbi Richard_part5.pbi Richard_part6.pbi
 build Richard.pbw : browsedata Richard.pbd
 
