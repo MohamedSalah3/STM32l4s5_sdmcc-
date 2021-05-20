@@ -7,12 +7,10 @@
 
 #include "UartRingbuffer.h"
 #include <string.h>
-
+#include "usart.h"
 /* define the UART you are using  */
 
-UART_HandleTypeDef huart1;
-
-#define uart &huart1
+//UART_HandleTypeDef huart1;
 
 /* put the following in the ISR 
 
@@ -23,10 +21,10 @@ extern void Uart_isr (UART_HandleTypeDef *huart);
 /**************** no chnages after this **********************/
 
 
-ring_buffer rx_buffer = { { 0 }, 0, 0};
-ring_buffer tx_buffer = { { 0 }, 0, 0};
+ ring_buffer rx_buffer ;
+ ring_buffer tx_buffer ;
 
-ring_buffer *_rx_buffer;
+ring_buffer  *_rx_buffer;
 ring_buffer *_tx_buffer;
 
 void store_char(unsigned char c, ring_buffer *buffer);
@@ -38,10 +36,10 @@ void Ringbuf_init(void)
   _tx_buffer = &tx_buffer;
 
   /* Enable the UART Error Interrupt: (Frame error, noise error, overrun error) */
-  __HAL_UART_ENABLE_IT(uart, UART_IT_ERR);
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_ERR);
 
   /* Enable the UART Data Register not empty Interrupt */
-  __HAL_UART_ENABLE_IT(uart, UART_IT_RXNE);
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
 }
 
 void store_char(unsigned char c, ring_buffer *buffer)
@@ -87,7 +85,7 @@ void Uart_write(int c)
 		_tx_buffer->buffer[_tx_buffer->head] = (uint8_t)c;
 		_tx_buffer->head = i;
 
-		__HAL_UART_ENABLE_IT(uart, UART_IT_TXE); // Enable UART transmission interrupt
+		__HAL_UART_ENABLE_IT(&huart1, UART_IT_TXE); // Enable UART transmission interrupt
 	}
 }
 
@@ -211,11 +209,11 @@ int wait_until (char *string, char*buffertostore)
 
 void Uart_isr (UART_HandleTypeDef *huart)
 {
-	  uint32_t isrflags   = READ_REG(huart->Instance->SR);
+	  uint32_t isrflags   = READ_REG(huart->Instance->ISR);
 	  uint32_t cr1its     = READ_REG(huart->Instance->CR1);
 
     /* if DR is not empty and the Rx Int is enabled */
-    if (((isrflags & USART_SR_RXNE) != RESET) && ((cr1its & USART_CR1_RXNEIE) != RESET))
+    if (((isrflags & USART_ISR_RXNE_RXFNE) != RESET) && ((cr1its & USART_CR1_RXNEIE_RXFNEIE) != RESET))
     {
     	 /******************
     	    	      *  @note   PE (Parity error), FE (Framing error), NE (Noise error), ORE (Overrun
@@ -228,14 +226,14 @@ void Uart_isr (UART_HandleTypeDef *huart)
     	    	      * @note   TXE flag is cleared only by a write to the USART_DR register.
 
     	 *********************/
-		huart->Instance->SR;                       /* Read status register */
-        unsigned char c = huart->Instance->DR;     /* Read data register */
+		huart->Instance->ISR;                       /* Read status register */
+        unsigned char c = huart->Instance->RDR;     /* Read data register */
         store_char (c, _rx_buffer);  // store data in buffer
         return;
     }
 
     /*If interrupt is caused due to Transmit Data Register Empty */
-    if (((isrflags & USART_SR_TXE) != RESET) && ((cr1its & USART_CR1_TXEIE) != RESET))
+    if (((isrflags & USART_ISR_TXE_TXFNF) != RESET) && ((cr1its & USART_CR1_TXEIE_TXFNFIE) != RESET))
     {
     	if(tx_buffer.head == tx_buffer.tail)
     	    {
@@ -262,8 +260,8 @@ void Uart_isr (UART_HandleTypeDef *huart)
 
     	      *********************/
 
-    	      huart->Instance->SR;
-    	      huart->Instance->DR = c;
+    	      huart->Instance->ISR;
+    	      huart->Instance->TDR = c;
 
     	    }
     	return;
