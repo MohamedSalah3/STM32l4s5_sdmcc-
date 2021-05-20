@@ -24,10 +24,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
-
+#include "UartRingbuffer.h"
+#include "usart.h"
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -59,6 +59,7 @@
 extern UART_HandleTypeDef huart1;
 /* USER CODE BEGIN EV */
 
+extern void Uart_isr (UART_HandleTypeDef *huart);
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -205,9 +206,9 @@ void SysTick_Handler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-
+Uart_isr (&huart1);
   /* USER CODE END USART1_IRQn 0 */
-  HAL_UART_IRQHandler(&huart1);
+  //HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
 
   /* USER CODE END USART1_IRQn 1 */

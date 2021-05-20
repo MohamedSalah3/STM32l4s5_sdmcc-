@@ -41,4 +41,7 @@ stm32l4xx_it.pbi: D:\freelance\Core\Src\stm32l4xx_it.c \
   D:\freelance\EWARM/../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_sd_ex.h \
   D:\freelance\EWARM/../Drivers/STM32L4xx_HAL_Driver/Inc\stm32l4xx_hal_uart.h \
   D:\freelance\EWARM/../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
-  D:\freelance\EWARM/../Core/Inc\stm32l4xx_it.h
+  D:\freelance\EWARM/../Core/Inc\stm32l4xx_it.h \
+  D:\freelance\EWARM/../Core/Inc\UartRingbuffer.h \
+  D:\freelance\EWARM/../Core/Inc\usart.h \
+  D:\freelance\EWARM/../Core/Inc/main.h
