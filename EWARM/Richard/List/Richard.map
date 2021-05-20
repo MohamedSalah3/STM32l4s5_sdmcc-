@@ -1,18 +1,19 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.40.1.212/W32 for ARM                  19/May/2021  14:57:12
+# IAR ELF Linker V8.40.1.212/W32 for ARM                  20/May/2021  11:19:51
 # Copyright 2007-2019 IAR Systems AB.
 #
 #    Output file  =  D:\freelance\EWARM\Richard\Exe\Richard.out
 #    Map file     =  D:\freelance\EWARM\Richard\List\Richard.map
 #    Command line =
-#        -f C:\Users\Dell\AppData\Local\Temp\EWC72B.tmp
+#        -f C:\Users\Dell\AppData\Local\Temp\EW7054.tmp
 #        (D:\freelance\EWARM\Richard\Obj\bsp_driver_sd.o
 #        D:\freelance\EWARM\Richard\Obj\diskio.o
 #        D:\freelance\EWARM\Richard\Obj\fatfs.o
 #        D:\freelance\EWARM\Richard\Obj\fatfs_platform.o
 #        D:\freelance\EWARM\Richard\Obj\ff.o
 #        D:\freelance\EWARM\Richard\Obj\ff_gen_drv.o
+#        D:\freelance\EWARM\Richard\Obj\file_handling.o
 #        D:\freelance\EWARM\Richard\Obj\gpio.o
 #        D:\freelance\EWARM\Richard\Obj\main.o
 #        D:\freelance\EWARM\Richard\Obj\sd_diskio.o
@@ -44,6 +45,7 @@
 #        D:\freelance\EWARM\Richard\Obj\stm32l4xx_ll_sdmmc.o
 #        D:\freelance\EWARM\Richard\Obj\syscall.o
 #        D:\freelance\EWARM\Richard\Obj\system_stm32l4xx.o
+#        D:\freelance\EWARM\Richard\Obj\UartRingbuffer.o
 #        D:\freelance\EWARM\Richard\Obj\usart.o --no_out_extension -o
 #        D:\freelance\EWARM\Richard\Exe\Richard.out --redirect
 #        _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb --map
