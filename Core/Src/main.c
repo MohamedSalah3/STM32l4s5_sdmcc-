@@ -68,8 +68,9 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+  
   /* USER CODE BEGIN 1 */
-
+char cmd = 0; 
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------*/
@@ -94,19 +95,99 @@ int main(void)
   MX_FATFS_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
+    Ringbuf_init();
+    mount_sd();
+/* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
+  while (IsDataAvailable())
+  	  {
+  		  Get_string(buffer);
+  		  int len = cmdlength(buffer);
+  		  get_path();
 
+  		  if (!(strncmp ("ls", buffer,len))) cmd = 'l';
+  		  if (!(strncmp ("mkdir", buffer,len))) cmd = 'm';
+  		  if (!(strncmp ("mkfil", buffer, len))) cmd = 'c';
+  		  if (!(strncmp ("read", buffer, len))) cmd = 'r';
+  		  if (!(strncmp ("write", buffer, len))) cmd = 'w';
+  		  if (!(strncmp ("rm", buffer, len))) cmd = 'd';
+  		  if (!(strncmp ("update", buffer, len))) cmd = 'u';
+  		  if (!(strncmp ("checkfile", buffer, len))) cmd = 'f';
+  		  if (!(strncmp ("checksd", buffer, len))) cmd = 's';
+
+
+  		  switch (cmd)
+  		  {
+  		  	  case ('l'):
+  		  			  scan_files(path);
+  		  	  	  	  cmd =0;
+  		  	  	  	  clear_buffer();
+  		  	  	  	  clear_path();
+  		  	  	  	  break;
+
+  			  case ('m'):
+  					  create_dir (path);
+  			  	  	  cmd=0;
+  			  	  	  clear_path();
+  			  	  	  break;
+
+  			  case ('c'):
+  					  create_file(path);
+  			  	  	  cmd = 0;
+  			  	  	  clear_path();
+  			  	  	  break;
+
+  			  case ('r'):
+  					  read_file (path);
+  			  	  	  cmd = 0;
+  			  	  	  clear_path();
+  			  	  	  break;
+
+  			  case ('d'):
+  					  remove_file(path);
+  			  	  	  cmd = 0;
+  			  	  	  clear_path();
+  			  	  	  break;
+
+  			  case ('w'):
+  					  write_file (path);
+  			  	  	  cmd = 0;
+  			  	  	  clear_path();
+  			  	  	  break;
+
+  			  case ('u'):
+  					  update_file (path);
+  			  	  	  cmd = 0;
+  			  	  	  clear_path();
+  			  	  	  break;
+
+  			  case ('f'):
+  					  check_file(path);
+  			  	  	  cmd = 0;
+  			  	  	  clear_path();
+  			  	  	  break;
+
+  			  case ('s'):
+  					  check_sd();
+  			  	  	  cmd = 0;
+  			  	  	  clear_path();
+  			  	  	  break;
+
+  			  default :
+  				  clear_buffer();
+  				  clear_path();
+  				  break;
+  		  }
+  	  }
+    }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
-}
 
 /**
   * @brief System Clock Configuration
